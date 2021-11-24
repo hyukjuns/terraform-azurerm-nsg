@@ -8,7 +8,7 @@ resource "azurerm_network_security_group" "nsg" {
   location            = coalesce(var.location, data.azurerm_resource_group.nsg.location)
 }
 
-resource "azurerm_network_security_rule" "nsg_rule" {
+resource "azurerm_network_security_rule" "nsg" {
   count                                 = length(var.rules)
   name                                  = lookup(var.rules[count.index], "name", "default_rule_name")
   priority                              = lookup(var.rules[count.index], "priority")
@@ -29,13 +29,13 @@ resource "azurerm_network_security_rule" "nsg_rule" {
   resource_group_name         = data.azurerm_resource_group.nsg.name
 }
 
-resource "azurerm_subnet_network_security_group_association" "nsg_subnet" {
+resource "azurerm_subnet_network_security_group_association" "nsg" {
   count                     = (var.attach_to_subnet == null) ? 0 : length(var.attach_to_subnet)
   subnet_id                 = var.attach_to_subnet[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "nsg_nic" {
+resource "azurerm_network_interface_security_group_association" "nsg" {
   count                     = (var.attach_to_nic == null) ? 0 : length(var.attach_to_nic)
   network_interface_id      = var.attach_to_nic[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.id

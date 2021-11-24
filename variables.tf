@@ -15,7 +15,18 @@ variable "nsg_name" {
 # Tags => source_address_prefix/destination_address_prefix
 variable "rules" {
   type        = any
-  description = "[name, priority, direction, access, protocol, ,source_address_prefix/es, source_port_range, destination_address_prefix/es, destination_port_range"
+  description = <<EOF"
+  name,
+  priority,
+  direction,
+  access,
+  protocol,
+  source_address_prefix/es,
+  source_port_range,
+  destination_address_prefix,
+  destination_address_prefixex,
+  destination_port_range"
+  EOF
   default     = []
 }
 
