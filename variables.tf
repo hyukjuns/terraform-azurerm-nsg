@@ -12,32 +12,21 @@ variable "nsg_name" {
   description = "NSG Name"
 }
 
-# Tags => source_address_prefix/destination_address_prefix
+# Service Tags => source_address_prefix/destination_address_prefix
 variable "rules" {
   type        = any
-  description = <<EOF"
-  name,
-  priority,
-  direction,
-  access,
-  protocol,
-  source_address_prefix/es,
-  source_port_range,
-  destination_address_prefix,
-  destination_address_prefixex,
-  destination_port_range"
-  EOF
+  description ="name,priority,direction,access,protocol,source_address_prefix,source_address_prefixes,source_port_range,destination_address_prefix,destination_address_prefixex,destination_port_range"
   default     = []
 }
 
 # [Optional] Attach NSG to subnet or nic or neither
 variable "attach_to_subnet" {
   type        = list
-  description = "Are you attach this nsg to subnet? true or false"
+  description = "subnet id 나열"
   default     = []
 }
 variable "attach_to_nic" {
   type        = list
-  description = "Are you attach this nsg to subnet? true or false"
+  description = "nic id 나열"
   default     = []
 }

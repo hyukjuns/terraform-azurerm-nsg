@@ -1,15 +1,3 @@
-# terraform-azurerm-nsg
-# Prerequisites
-## OS
-- MacOS or Linux or WSL2
-## Registry
-terraform cloud private repository
-## Version & Provider
-- Terraform( > 0.13.0)
-- hashicorp/azurerm( > 2.60.0)
-## Usage-Sample
-[usage-sample](./usage-sample)
-```
 provider "azurerm" {
   features {}
 }
@@ -18,6 +6,7 @@ resource "azurerm_resource_group" "nsg" {
   name     = "tf-rg"
   location = "koreacentral"
 }
+
 module "nsg" {
   source  = "app.terraform.io/cloocus-mspdevops/nsg/azurerm"
   version = "1.0.0"
@@ -67,44 +56,3 @@ module "nsg" {
     azurerm_resource_group.nsg
   ]
 }
-```
-## Inputs
-### Required
-```
-resource_group_name (string)
-location (string)
-nsg_name (srting)
-rules (any)
-```
-### Optional
-```
-attach_to_subnet (list)
-attach_to_nic (list)
-```
-### *Caution
-- rules
-
-    name,\
-    priority,\
-    direction,\
-    access,\
-    protocol,\
-    source_address_prefix,\
-    source_address_prefixes,\
-    source_port_range,\
-    destination_address_prefix,\
-    destination_address_prefixes,\
-    destination_port_range,\
-    source_application_security_group_ids
-
-- 서비스 태그 및 *(Any)는 source_address_prefix/destination_address_prefix 에 선언
-- 복수 주소는 source_address_prefixes/destination_address_prefixes 에 list로 선언
-
-- 포트가 여러개 일 경우 source_port_range/destination_port_range 에 string 형식으로("3000, 3001") 선언
-
-## Outputs
-[details](./outputs.tf)
-```
-nsg_name
-nsg_id
-```
