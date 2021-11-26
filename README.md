@@ -1,13 +1,13 @@
 # terraform-azurerm-nsg
-# Prerequisites
-## OS
+## 환경 준비
+### OS
 - MacOS or Linux or WSL2
-## Registry
+### Registry
 terraform cloud private repository
-## Version & Provider
+### Version & Provider
 - Terraform( > 0.13.0)
 - hashicorp/azurerm( > 2.60.0)
-## Usage-Sample
+## 사용 예제
 [usage-sample](./usage-sample)
 ```
 provider "azurerm" {
@@ -81,7 +81,7 @@ rules (any)
 attach_to_subnet (list)
 attach_to_nic (list)
 ```
-### *Caution
+### rules 입력시 참고사항
 - rules
 
     name,\
