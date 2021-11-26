@@ -20,7 +20,7 @@ resource "azurerm_resource_group" "nsg" {
 }
 module "nsg" {
   source  = "app.terraform.io/cloocus-mspdevops/nsg/azurerm"
-  version = "1.0.0"
+  version = "x.x.x"
   resource_group_name = azurerm_resource_group.nsg.name
   location            = azurerm_resource_group.nsg.location
   nsg_name            = "tf-nsg"
