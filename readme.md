@@ -1,10 +1,4 @@
 <!-- BEGIN_TF_DOCS -->
-# terraform-azurerm-nsg
-Azure Network Security Group Module <br>
-Terraform Cloud Module Registry에 등록하여 관리 하는 VCS 입니다.
-### Terraform Cloud Module Registry에 연결하기 위한 VCS Naming Convention
-- ```terraform-<PROVIDER>-<MODULENAME>```
-
 ## Requirements
 
 | Name | Version |
@@ -21,66 +15,6 @@ Terraform Cloud Module Registry에 등록하여 관리 하는 VCS 입니다.
 
 No modules.
 
-## Usage
-```
-provider "azurerm" {
-  features {}
-}
-
-resource "azurerm_resource_group" "nsg" {
-  name     = "tf-rg"
-  location = "koreacentral"
-}
-module "nsg" {
-  source  = "<TFC_REGISTRY>"
-  resource_group_name = azurerm_resource_group.nsg.name
-  location            = azurerm_resource_group.nsg.location
-  nsg_name            = "tf-nsg"
-
-  rules = [
-    {
-      name                       = "ssh"
-      priority                   = 100
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_address_prefix      = "*"
-      source_port_range          = "*"
-      destination_address_prefix = "*"
-      destination_port_range     = "22"
-    },
-    {
-      name                       = "http"
-      priority                   = 110
-      direction                  = "Inbound"
-      access                     = "Allow"
-      protocol                   = "Tcp"
-      source_address_prefix      = "*"
-      source_port_range          = "*"
-      destination_address_prefix = "*"
-      destination_port_range     = "80,8080"
-    },
-    {
-      name                         = "private_rule"
-      priority                     = 120
-      direction                    = "Inbound"
-      access                       = "Allow"
-      protocol                     = "Tcp"
-      source_address_prefixes      = ["172.16.0.1", "172.16.0.2"]
-      source_port_range            = "*"
-      destination_address_prefixes = ["10.0.0.0/24", "192.168.0.1"]
-      destination_port_range       = "3000,3001"
-    }
-  ]
-
-  attach_to_subnet = [module.network.subnet_id]
-  # attach_to_nic = [module.linux.nic_id, module.window.nic_id]
-  depends_on = [
-    azurerm_resource_group.nsg
-  ]
-}
-```
-
 ## Resources
 
 | Name | Type |
@@ -92,10 +26,6 @@ module "nsg" {
 | [azurerm_resource_group.nsg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
-- 서비스 태그 및 *(Any)는 source_address_prefix/destination_address_prefix 에 선언
-- 복수 주소는 source_address_prefixes/destination_address_prefixes 에 list로 선언
-
-- 포트가 여러개 일 경우 source_port_range/destination_port_range 에 string 형식으로("3000, 3001") 선언
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
